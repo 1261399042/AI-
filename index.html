@@ -141,6 +141,50 @@
             font-size: 14px;
             line-height: 2;
         }
+        @media (max-width: 768px) {
+            header {
+                padding: 18px 16px;
+            }
+            header h1 {
+                font-size: 22px;
+            }
+            header p {
+                font-size: 13px;
+            }
+            .nav-bar {
+                padding: 8px 10px;
+                position: static;
+            }
+            .nav-bar a {
+                display: inline-block;
+                padding: 6px 10px;
+                margin: 3px 2px;
+                font-size: 13px;
+            }
+            .container {
+                max-width: 100%;
+                margin: 14px auto;
+                padding: 0 12px;
+            }
+            .section {
+                padding: 18px 14px;
+            }
+            .section h2 {
+                font-size: 19px;
+            }
+            .section h3 {
+                font-size: 16px;
+            }
+            .section p, .layer-card p {
+                font-size: 14px;
+            }
+            table {
+                font-size: 12px;
+            }
+            table th, table td {
+                padding: 6px 5px;
+            }
+        }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
     <script>
@@ -154,7 +198,7 @@
 <body>
 <header>
     <h1>求职全流程AI智能体</h1>
-    <p>用户研究与画像 | KANO需求模型 | HMW五步法 | 3款竞品五层模型可视化分析 | MVP落地规划 | 信息架构</p>
+    <p>用户研究与画像 | KANO需求模型 | HMW五步法 | 3款竞品五层模型可视化分析 | MVP落地规划 | 信息架构 | 商业化变现</p>
 </header>
 <div class="nav-bar">
     <a href="#intro">项目简介</a>
@@ -167,6 +211,7 @@
     <a href="#ux-mvp">用户体验与MVP</a>
     <a href="#decompose">产品拆解五层</a>
     <a href="#ia">信息架构</a>
+    <a href="#monetize">商业化与变现</a>
 </div>
 <div class="container">
 
@@ -2240,6 +2285,111 @@ flowchart TD
     <p style="color:#64748b;font-size:13px;text-align:center;margin:6px 0 18px;">↑ 全局：首页为 Hub & Spoke 中心；四阶段为辐射 spoke；spoke 内部再按场景选用 Hierarchy / Filtered view / Nested doll。</p>
 
     <p style="color:#666;line-height:1.8;margin-top:12px;"><b>小结：</b>本信息架构以 Tabbed view 为全局骨架，首页承担 Hub & Spoke + Bento box 仪表盘角色，面试/刷题/投递用 Hierarchy 与 Filtered view 组织长链路任务，"我的"用 Nested doll 收纳个人资产，与第九章功能金字塔一一对应、可直接落地。</p>
+</section>
+
+<section id="monetize" class="section">
+    <h2>十一、商业化与变现模式</h2>
+    <p style="color:#666;line-height:1.8;">本章给出产品的三驾马车变现框架——<b>会员订阅（Recurring SaaS）+ 广告变现（Ads）+ 内容付费（Content）</b>，明确各模式的定位、权益分层、定价与体验平衡，并与第九章商业层的"商业模式双轮 + MVP 三阶段"相呼应。</p>
+
+    <h3>11.1 变现总览：三驾马车</h3>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:16px 0;">
+        <div class="layer-card" style="border-left-color:#2563eb;">
+            <h5>① 会员订阅（主引擎）</h5>
+            <p style="font-size:14px;color:#475569;">稳定可预期的 recurring 现金流；承担核心付费转化与用户留存。</p>
+            <p style="font-size:13px;color:#64748b;margin-top:6px;">目标占比 ~60%</p>
+        </div>
+        <div class="layer-card" style="border-left-color:#ea580c;">
+            <h5>② 广告变现（流量引擎）</h5>
+            <p style="font-size:14px;color:#475569;">用免费用户流量变现；B 端招聘方职位推广是高价值广告。</p>
+            <p style="font-size:13px;color:#64748b;margin-top:6px;">目标占比 ~25%</p>
+        </div>
+        <div class="layer-card" style="border-left-color:#ca8a04;">
+            <h5>③ 内容付费（高毛利）</h5>
+            <p style="font-size:14px;color:#475569;">真题库 / 报告 / 模板 / 1v1 模拟等知识型变现，毛利高、黏性强。</p>
+            <p style="font-size:13px;color:#64748b;margin-top:6px;">目标占比 ~15%</p>
+        </div>
+    </div>
+    <p style="color:#64748b;font-size:13px;">三者关系：会员为基、广告与内容为辅，互相导流——免费用户经广告/内容种草转化为会员，会员再被引导至高阶付费内容。</p>
+
+    <h3>11.2 会员订阅：Freemium 分层</h3>
+    <p style="color:#666;line-height:1.8;">采用免费增值模型，按"功能配额 + 去广告 + 高阶内容"分层，引导免费用户向付费转化。</p>
+    <table style="width:100%;border-collapse:collapse;">
+        <thead><tr style="background:#f0f4ff;">
+            <th style="border:1px solid #d0d7e2;padding:8px;text-align:left;">权益维度</th>
+            <th style="border:1px solid #d0d7e2;padding:8px;text-align:left;">免费版</th>
+            <th style="border:1px solid #d0d7e2;padding:8px;text-align:left;">标准会员</th>
+            <th style="border:1px solid #d0d7e2;padding:8px;text-align:left;">尊享会员</th>
+        </tr></thead>
+        <tbody>
+            <tr><td style="border:1px solid #e3e8ef;padding:8px;"><b>价格</b></td><td style="border:1px solid #e3e8ef;padding:8px;">¥0</td><td style="border:1px solid #e3e8ef;padding:8px;">¥29/月 · ¥199/年</td><td style="border:1px solid #e3e8ef;padding:8px;">¥59/月 · ¥399/年</td></tr>
+            <tr><td style="border:1px solid #e3e8ef;padding:8px;"><b>AI 模拟面试</b></td><td style="border:1px solid #e3e8ef;padding:8px;">3 次/月</td><td style="border:1px solid #e3e8ef;padding:8px;">30 次/月</td><td style="border:1px solid #e3e8ef;padding:8px;">不限</td></tr>
+            <tr><td style="border:1px solid #e3e8ef;padding:8px;"><b>题库 / 真题</b></td><td style="border:1px solid #e3e8ef;padding:8px;">基础题库</td><td style="border:1px solid #e3e8ef;padding:8px;">全量题库</td><td style="border:1px solid #e3e8ef;padding:8px;">全量 + 独家真题</td></tr>
+            <tr><td style="border:1px solid #e3e8ef;padding:8px;"><b>简历解析 / 风险检测</b></td><td style="border:1px solid #e3e8ef;padding:8px;">1 次</td><td style="border:1px solid #e3e8ef;padding:8px;">10 次/月</td><td style="border:1px solid #e3e8ef;padding:8px;">不限</td></tr>
+            <tr><td style="border:1px solid #e3e8ef;padding:8px;"><b>复盘报告 / 能力雷达</b></td><td style="border:1px solid #e3e8ef;padding:8px;">基础</td><td style="border:1px solid #e3e8ef;padding:8px;">完整</td><td style="border:1px solid #e3e8ef;padding:8px;">完整 + 周报推送</td></tr>
+            <tr><td style="border:1px solid #e3e8ef;padding:8px;"><b>广告</b></td><td style="border:1px solid #e3e8ef;padding:8px;">有</td><td style="border:1px solid #e3e8ef;padding:8px;">无</td><td style="border:1px solid #e3e8ef;padding:8px;">无</td></tr>
+            <tr><td style="border:1px solid #e3e8ef;padding:8px;"><b>1v1 高阶模拟 / 谈薪</b></td><td style="border:1px solid #e3e8ef;padding:8px;">—</td><td style="border:1px solid #e3e8ef;padding:8px;">9 折</td><td style="border:1px solid #e3e8ef;padding:8px;">含 2 次/月</td></tr>
+        </tbody>
+    </table>
+    <div class="chart-box">
+        <div class="mermaid">
+flowchart LR
+    F[免费用户] --> A[激活核心功能<br/>模拟面试/简历解析]
+    A --> P{付费转化}
+    P -->|标准会员| S[标准 ¥199/年]
+    P -->|尊享会员| V[尊享 ¥399/年]
+    S --> R[续费/升级]
+    V --> R
+    R --> L[高 LTV]
+        </div>
+    </div>
+    <p style="color:#64748b;font-size:13px;text-align:center;">↑ 会员转化漏斗：激活 → 付费 → 续费升级 → 高 LTV</p>
+    <p style="color:#666;line-height:1.8;margin-top:8px;"><b>关键指标：</b>付费率（目标 8–12%）、ARPPU、月续费率（目标 ≥70%）、LTV/CAC ≥ 3。</p>
+
+    <h3>11.3 广告变现：流量与体验的平衡</h3>
+    <p style="color:#666;line-height:1.8;">以原生、低频、可关闭为原则，免费用户观看、会员免广告，避免损害求职核心体验。</p>
+    <table style="width:100%;border-collapse:collapse;">
+        <thead><tr style="background:#f0f4ff;">
+            <th style="border:1px solid #d0d7e2;padding:8px;text-align:left;width:22%;">广告形式</th>
+            <th style="border:1px solid #d0d7e2;padding:8px;text-align:left;width:30%;">位置 / 形态</th>
+            <th style="border:1px solid #d0d7e2;padding:8px;text-align:left;width:24%;">计费</th>
+            <th style="border:1px solid #d0d7e2;padding:8px;text-align:left;width:24%;">广告主</th>
+        </tr></thead>
+        <tbody>
+            <tr><td style="border:1px solid #e3e8ef;padding:8px;"><b>信息流原生广告</b></td><td style="border:1px solid #e3e8ef;padding:8px;">题库/资讯流穿插，样式贴合内容</td><td style="border:1px solid #e3e8ef;padding:8px;">CPM / CPC</td><td style="border:1px solid #e3e8ef;padding:8px;">教育机构、求职课程</td></tr>
+            <tr><td style="border:1px solid #e3e8ef;padding:8px;"><b>职位推广（效果广告）</b></td><td style="border:1px solid #e3e8ef;padding:8px;">投递页/首页推荐位，按匹配度排序</td><td style="border:1px solid #e3e8ef;padding:8px;">CPC / 按投递计费</td><td style="border:1px solid #e3e8ef;padding:8px;">B 端招聘企业</td></tr>
+            <tr><td style="border:1px solid #e3e8ef;padding:8px;"><b>品牌 Banner</b></td><td style="border:1px solid #e3e8ef;padding:8px;">首页/我的页底部，低频展示</td><td style="border:1px solid #e3e8ef;padding:8px;">CPT / CPM</td><td style="border:1px solid #e3e8ef;padding:8px;">雇主品牌、泛招聘</td></tr>
+            <tr><td style="border:1px solid #e3e8ef;padding:8px;"><b>内容/课程推广</b></td><td style="border:1px solid #e3e8ef;padding:8px;">真题/报告页相关推荐</td><td style="border:1px solid #e3e8ef;padding:8px;">CPS 分佣</td><td style="border:1px solid #e3e8ef;padding:8px;">知识付费作者</td></tr>
+        </tbody>
+    </table>
+    <p style="color:#666;line-height:1.8;margin-top:8px;"><b>体验护栏：</b>每屏 ≤1 条广告、每日 ≤3 次曝光、可一键关闭；会员永久去广告，将"去广告"作为付费核心钩子。</p>
+
+    <h3>11.4 内容付费：知识型高毛利变现</h3>
+    <p style="color:#666;line-height:1.8;">把求职过程中的"信息差"产品化，形成可复购的内容资产；供给端采用 PGC + UGC + B 端三方协同。</p>
+    <table style="width:100%;border-collapse:collapse;">
+        <thead><tr style="background:#f0f4ff;">
+            <th style="border:1px solid #d0d7e2;padding:8px;text-align:left;width:24%;">内容品类</th>
+            <th style="border:1px solid #d0d7e2;padding:8px;text-align:left;width:38%;">形态</th>
+            <th style="border:1px solid #d0d7e2;padding:8px;text-align:left;width:18%;">定价</th>
+            <th style="border:1px solid #d0d7e2;padding:8px;text-align:left;width:20%;">供给方</th>
+        </tr></thead>
+        <tbody>
+            <tr><td style="border:1px solid #e3e8ef;padding:8px;"><b>面试真题库</b></td><td style="border:1px solid #e3e8ef;padding:8px;">按行业/公司/岗位分类的独家真题 + 解析</td><td style="border:1px solid #e3e8ef;padding:8px;">单篇 ¥9.9 / 专栏 ¥49</td><td style="border:1px solid #e3e8ef;padding:8px;">PGC + UGC</td></tr>
+            <tr><td style="border:1px solid #e3e8ef;padding:8px;"><b>行业研究报告</b></td><td style="border:1px solid #e3e8ef;padding:8px;">薪资/赛道/雇主口碑洞察报告</td><td style="border:1px solid #e3e8ef;padding:8px;">¥19.9 / 份</td><td style="border:1px solid #e3e8ef;padding:8px;">PGC</td></tr>
+            <tr><td style="border:1px solid #e3e8ef;padding:8px;"><b>简历模板库</b></td><td style="border:1px solid #e3e8ef;padding:8px;">多行业精美模板 + 撰写范例</td><td style="border:1px solid #e3e8ef;padding:8px;">¥9.9 / 套</td><td style="border:1px solid #e3e8ef;padding:8px;">PGC</td></tr>
+            <tr><td style="border:1px solid #e3e8ef;padding:8px;"><b>1v1 AI 高阶模拟</b></td><td style="border:1px solid #e3e8ef;padding:8px;">含多角色 + 实时反馈的按次模拟</td><td style="border:1px solid #e3e8ef;padding:8px;">¥19.9 / 次</td><td style="border:1px solid #e3e8ef;padding:8px;">平台</td></tr>
+            <tr><td style="border:1px solid #e3e8ef;padding:8px;"><b>Offer 谈薪 / 求职课</b></td><td style="border:1px solid #e3e8ef;padding:8px;">视频课 + 直播 + 导师答疑</td><td style="border:1px solid #e3e8ef;padding:8px;">¥99–299</td><td style="border:1px solid #e3e8ef;padding:8px;">PGC + UGC 达人</td></tr>
+        </tbody>
+    </table>
+
+    <h3>11.5 变现组合策略与商业目标</h3>
+    <ul style="color:#666;line-height:1.9;padding-left:20px;">
+        <li><b>双轮驱动呼应：</b>会员（用户侧 recurring 收入）+ 广告/内容（流量与知识侧收入）双轮，对应第九章商业层"商业模式双轮 + MVP 三阶段"。</li>
+        <li><b>收入结构目标：</b>会员 ~60% / 广告 ~25% / 内容 ~15%，降低单一模式风险。</li>
+        <li><b>分阶段节奏：</b>MVP 期验证付费意愿（先上会员+单篇内容）→ 增长期放大广告与职位推广 → 成熟期多元内容生态。</li>
+        <li><b>单位经济：</b>控制 CAC（裂变/渠道），目标 LTV/CAC ≥ 3、回收周期 &lt; 6 个月。</li>
+        <li><b>风险与合规：</b>广告频次与隐私合规（求职数据敏感，不做精准画像广告）、内容版权与质量审核。</li>
+    </ul>
+    <p style="color:#64748b;font-size:13px;margin-top:10px;"><b>小结：</b>以会员订阅为稳定基本盘，广告做流量变现、内容做高毛利增值，三者协同构成可持续的商业化闭环，且与产品"记忆互通 + 主动推送"的壁垒形成正向循环。</p>
 </section>
 
 </div>

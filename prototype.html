@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>求职全流程AI智能体 · 高保真原型</title>
+<style>
+:root{
+  --primary:#4f46e5; --primary-soft:#eef2ff; --accent:#06b6d4; --warn:#f59e0b;
+  --bg:#f4f5f8; --card:#ffffff; --text:#1f2330; --sub:#8a90a2; --line:#eceef2;
+  --green:#16a34a; --red:#dc2626; --radius:16px; --shadow:0 2px 12px rgba(20,24,40,.06);
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;
+  background:#dfe2ea;color:var(--text);display:flex;justify-content:center;align-items:stretch}
+.phone{width:100%;max-width:430px;background:var(--bg);min-height:100vh;display:flex;flex-direction:column;
+  position:relative;box-shadow:0 0 50px rgba(0,0,0,.12)}
+/* 顶部栏 */
+.appbar{position:sticky;top:0;z-index:20;background:linear-gradient(135deg,#4f46e5,#7c3aed);
+  color:#fff;padding:14px 18px;display:flex;align-items:center;justify-content:space-between}
+.appbar h1{font-size:17px;font-weight:700;letter-spacing:.5px}
+.appbar .badge{font-size:12px;background:rgba(255,255,255,.18);padding:4px 10px;border-radius:20px}
+/* 内容区 */
+.content{flex:1;overflow-y:auto;padding:16px 16px 92px;-webkit-overflow-scrolling:touch}
+.view{display:none;animation:fade .25s ease}
+.view.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.card{background:var(--card);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow);margin-bottom:14px}
+.card h3{font-size:15px;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.muted{color:var(--sub);font-size:13px}
+.tag{display:inline-block;font-size:11px;padding:2px 8px;border-radius:8px;background:var(--primary-soft);color:var(--primary)}
+/* 首页 Bento */
+.greet{margin-bottom:14px}
+.greet .hi{font-size:20px;font-weight:800}
+.greet .sub{color:var(--sub);font-size:13px;margin-top:2px}
+.bento{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
+.bento .cell{background:var(--card);border-radius:var(--radius);padding:14px;box-shadow:var(--shadow)}
+.bento .num{font-size:24px;font-weight:800;color:var(--primary)}
+.bento .num small{font-size:13px;font-weight:600;color:var(--sub)}
+.bento .lbl{font-size:12px;color:var(--sub);margin-top:2px}
+.quick{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
+.quick .q{background:linear-gradient(135deg,#4f46e5,#6366f1);color:#fff;border-radius:var(--radius);
+  padding:16px;box-shadow:var(--shadow);text-align:left;border:none;font-size:15px;font-weight:700;cursor:pointer}
+.quick .q.alt{background:linear-gradient(135deg,#06b6d4,#0891b2)}
+.quick .q small{display:block;font-size:11px;font-weight:400;opacity:.85;margin-top:4px}
+.row{display:flex;align-items:center;gap:12px}
+.avatar{width:40px;height:40px;border-radius:12px;background:var(--primary-soft);color:var(--primary);
+  display:flex;align-items:center;justify-content:center;font-weight:800;flex:0 0 auto}
+.job{border-bottom:1px solid var(--line);padding:12px 0;display:flex;justify-content:space-between;align-items:center}
+.job:last-child{border-bottom:none}
+.job .co{font-size:14px;font-weight:700}
+.job .pos{font-size:12px;color:var(--sub);margin-top:2px}
+.match{font-size:12px;font-weight:700;color:var(--green);background:#dcfce7;padding:3px 8px;border-radius:8px;flex:0 0 auto}
+.banner{background:linear-gradient(135deg,#fef3c7,#fde68a);color:#92400e;border-radius:var(--radius);
+  padding:12px 14px;font-size:13px;display:flex;align-items:center;gap:8px;margin-bottom:14px}
+/* 列表通用 */
+.list-item{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}
+.list-item:last-child{border-bottom:none}
+.list-item .meta{flex:1}
+.list-item .t{font-size:14px;font-weight:600}
+.list-item .d{font-size:12px;color:var(--sub);margin-top:3px}
+.score{font-size:18px;font-weight:800;color:var(--primary)}
+.chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;margin-bottom:12px}
+.chip{flex:0 0 auto;font-size:13px;padding:6px 14px;border-radius:20px;background:#fff;border:1px solid var(--line);color:var(--sub)}
+.chip.on{background:var(--primary);color:#fff;border-color:var(--primary)}
+.pbar{height:8px;background:#e9ebf0;border-radius:6px;overflow:hidden;margin-top:8px}
+.pbar > i{display:block;height:100%;background:linear-gradient(90deg,#4f46e5,#06b6d4)}
+.badge-st{font-size:11px;font-weight:700;padding:3px 9px;border-radius:8px}
+.st-offer{background:#dcfce7;color:var(--green)}
+.st-int{background:#dbeafe;color:#2563eb}
+.st-done{background:#f1f5f9;color:var(--sub)}
+.st-fail{background:#fee2e2;color:var(--red)}
+.btn{width:100%;background:var(--primary);color:#fff;border:none;border-radius:12px;padding:13px;font-size:15px;font-weight:700;cursor:pointer;margin-top:6px}
+.btn.ghost{background:#fff;color:var(--primary);border:1px solid var(--primary)}
+.member{background:linear-gradient(135deg,#1f2937,#374151);color:#fff;border-radius:var(--radius);padding:16px;margin-bottom:14px}
+.member .lv{font-size:13px;opacity:.8}
+.member .name{font-size:18px;font-weight:800;margin:4px 0 12px}
+.member .adbtn{background:linear-gradient(135deg,#f59e0b,#fbbf24);color:#78350f;border:none;border-radius:10px;
+  padding:10px;width:100%;font-weight:700;font-size:13px;cursor:pointer}
+/* 底部 Tab */
+.tabbar{position:fixed;bottom:0;width:100%;max-width:430px;background:#fff;border-top:1px solid var(--line);
+  display:flex;z-index:30;padding:6px 0 8px}
+.tab{flex:1;background:none;border:none;display:flex;flex-direction:column;align-items:center;gap:3px;
+  color:var(--sub);font-size:11px;cursor:pointer;padding:4px 0}
+.tab svg{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:1.8}
+.tab.on{color:var(--primary)}
+.tab.on svg{fill:var(--primary-soft)}
+.section-title{font-size:13px;color:var(--sub);font-weight:700;margin:4px 2px 10px;letter-spacing:1px}
+</style>
+</head>
+<body>
+<div class="phone">
+  <header class="appbar">
+    <h1 id="barTitle">首页</h1>
+    <span class="badge">AI 求职智能体</span>
+  </header>
+
+  <main class="content">
+    <!-- ========== 首页 ========== -->
+    <section class="view active" id="v-home">
+      <div class="greet">
+        <div class="hi">下午好，俊宇 👋</div>
+        <div class="sub">AI 陪你拿下每一次机会</div>
+      </div>
+      <div class="bento">
+        <div class="cell"><div class="num">3<small> 项</small></div><div class="lbl">今日待办</div></div>
+        <div class="cell"><div class="num">12<small> 次</small></div><div class="lbl">模拟面试</div></div>
+        <div class="cell"><div class="num">86<small> 个</small></div><div class="lbl">匹配职位</div></div>
+        <div class="cell"><div class="num">70<small> %</small></div><div class="lbl">简历完成度</div></div>
+      </div>
+      <div class="quick">
+        <button class="q" onclick="go('v-interview')">开始模拟面试<small>AI 实时追问 · 语音对练</small></button>
+        <button class="q alt" onclick="go('v-practice')">智能刷题<small>按岗位精准推题</small></button>
+      </div>
+      <div class="banner">🧠 跨模块记忆已同步：面试表现已自动更新到你的能力画像</div>
+      <div class="card">
+        <h3>🎯 为你推荐</h3>
+        <div class="job"><div class="row" style="flex:1">
+          <div class="avatar">字</div>
+          <div><div class="co">字节跳动</div><div class="pos">AI 产品经理 · 北京</div></div>
+        </div><span class="match">匹配 92%</span></div>
+        <div class="job"><div class="row" style="flex:1">
+          <div class="avatar">美</div>
+          <div><div class="co">美团</div><div class="pos">产品经理-大模型方向 · 上海</div></div>
+        </div><span class="match">匹配 88%</span></div>
+        <div class="job"><div class="row" style="flex:1">
+          <div class="avatar">小</div>
+          <div><div class="co">小米</div><div class="pos">AI 产品 · 武汉</div></div>
+        </div><span class="match">匹配 85%</span></div>
+      </div>
+    </section>
+
+    <!-- ========== 面试 ========== -->
+    <section class="view" id="v-interview">
+      <div class="card" style="background:linear-gradient(135deg,#4f46e5,#6366f1);color:#fff">
+        <h3 style="color:#fff">🎙️ 模拟面试</h3>
+        <div class="muted" style="color:rgba(255,255,255,.8)">选择方向，AI 面试官将实时追问并生成报告</div>
+        <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap">
+          <span class="tag" style="background:rgba(255,255,255,.2);color:#fff">技术深挖</span>
+          <span class="tag" style="background:rgba(255,255,255,.2);color:#fff">行为面试</span>
+          <span class="tag" style="background:rgba(255,255,255,.2);color:#fff">群面</span>
+          <span class="tag" style="background:rgba(255,255,255,.2);color:#fff">英语</span>
+        </div>
+        <button class="btn" style="margin-top:14px;background:#fff;color:var(--primary)" onclick="alert('原型演示：即将进入 AI 模拟面试间')">开始一次模拟面试</button>
+      </div>
+      <div class="section-title">最近练习</div>
+      <div class="card">
+        <div class="list-item"><div class="meta"><div class="t">大模型产品架构设计</div><div class="d">技术深挖 · 07-26</div></div><div class="score">86</div></div>
+        <div class="list-item"><div class="meta"><div class="t">聊聊你最失败的项目</div><div class="d">行为面试 · 07-24</div></div><div class="score">79</div></div>
+        <div class="list-item"><div class="meta"><div class="t">如何推动跨团队需求</div><div class="d">行为面试 · 07-21</div></div><div class="score">91</div></div>
+        <button class="btn ghost" onclick="go('v-me')">查看完整能力报告</button>
+      </div>
+    </section>
+
+    <!-- ========== 刷题 ========== -->
+    <section class="view" id="v-practice">
+      <div class="chips" id="pc">
+        <span class="chip on">全部</span><span class="chip">技术</span><span class="chip">产品</span><span class="chip">算法</span><span class="chip">英语</span>
+      </div>
+      <div class="card">
+        <div class="list-item"><div class="meta"><div class="t">如何定义一款 AI 产品的成功指标？</div>
+          <div class="d"><span class="tag">产品</span> 正确率 82% · 已练 3 次</div></div>☆</div>
+        <div class="list-item"><div class="meta"><div class="t">Transformer 与 RNN 的核心差异？</div>
+          <div class="d"><span class="tag">技术</span> 正确率 64% · 已练 1 次</div></div>☆</div>
+        <div class="list-item"><div class="meta"><div class="t">用产品经理视角解释什么是过拟合</div>
+          <div class="d"><span class="tag">算法</span> 正确率 71% · 已练 2 次</div></div>☆</div>
+        <div class="list-item"><div class="meta"><div class="t">Describe a product you admire and why.</div>
+          <div class="d"><span class="tag">英语</span> 正确率 58% · 已练 1 次</div></div>☆</div>
+      </div>
+      <div class="card">
+        <h3>📒 错题本</h3>
+        <div class="muted">12 道待巩固 · AI 已按薄弱点生成复习计划</div>
+        <button class="btn ghost">开始一轮错题巩固</button>
+      </div>
+    </section>
+
+    <!-- ========== 投递 ========== -->
+    <section class="view" id="v-apply">
+      <div class="card">
+        <div class="row" style="justify-content:space-around;text-align:center">
+          <div><div class="num" style="font-size:22px;font-weight:800">24</div><div class="lbl">投递</div></div>
+          <div><div class="num" style="font-size:22px;font-weight:800;color:#2563eb">6</div><div class="lbl">面试中</div></div>
+          <div><div class="num" style="font-size:22px;font-weight:800;color:var(--green)">2</div><div class="lbl">Offer</div></div>
+        </div>
+      </div>
+      <div class="chips"><span class="chip on">全部</span><span class="chip">已投递</span><span class="chip">面试中</span><span class="chip">Offer</span><span class="chip">未通过</span></div>
+      <div class="card">
+        <div class="job"><div class="meta"><div class="t">字节跳动 · AI 产品经理</div><div class="d">07-25 投递</div></div><span class="badge-st st-int">面试中</span></div>
+        <div class="job"><div class="meta"><div class="t">美团 · 大模型产品</div><div class="d">07-22 投递</div></div><span class="badge-st st-offer">Offer</span></div>
+        <div class="job"><div class="meta"><div class="t">腾讯 · 产品策划</div><div class="d">07-20 投递</div></div><span class="badge-st st-done">已投递</span></div>
+        <div class="job"><div class="meta"><div class="t">百度 · AI 产品</div><div class="d">07-18 投递</div></div><span class="badge-st st-fail">未通过</span></div>
+      </div>
+    </section>
+
+    <!-- ========== 我的 ========== -->
+    <section class="view" id="v-me">
+      <div class="card" style="display:flex;align-items:center;gap:14px">
+        <div class="avatar" style="width:54px;height:54px;font-size:20px;border-radius:16px">俊</div>
+        <div><div class="t" style="font-size:17px;font-weight:800">杨俊宇</div>
+        <div class="d" style="color:var(--sub);font-size:13px;margin-top:2px">求职意向：AI 产品经理</div></div>
+      </div>
+      <div class="card">
+        <h3>📁 求职档案</h3>
+        <div class="muted">简历 / 作品集 / 能力画像 完成度</div>
+        <div class="pbar"><i style="width:70%"></i></div>
+        <div class="muted" style="margin-top:6px">70% · 还差作品集与 2 段项目经历</div>
+      </div>
+      <div class="member">
+        <div class="lv">当前会员</div>
+        <div class="name">免费版</div>
+        <button class="adbtn" onclick="alert('原型演示：观看一段广告即可获得 1 天标准会员体验')">🎬 看广告得 1 天标准会员</button>
+      </div>
+      <div class="card">
+        <div class="list-item"><div class="meta"><div class="t">⭐ 我的收藏</div></div>›</div>
+        <div class="list-item"><div class="meta"><div class="t">📊 面试报告</div></div>›</div>
+        <div class="list-item"><div class="meta"><div class="t">⚙️ 设置</div></div>›</div>
+        <div class="list-item"><div class="meta"><div class="t">ℹ️ 关于产品</div></div>›</div>
+      </div>
+    </section>
+  </main>
+
+  <nav class="tabbar" id="tabbar">
+    <button class="tab on" data-view="v-home" data-title="首页">
+      <svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>首页</button>
+    <button class="tab" data-view="v-interview" data-title="面试">
+      <svg viewBox="0 0 24 24"><path d="M21 12a8 8 0 0 1-11.5 7.2L4 20l1-5A8 8 0 1 1 21 12z"/></svg>面试</button>
+    <button class="tab" data-view="v-practice" data-title="刷题">
+      <svg viewBox="0 0 24 24"><path d="M4 5h16v14H4z"/><path d="M8 9h8M8 13h6"/></svg>刷题</button>
+    <button class="tab" data-view="v-apply" data-title="投递">
+      <svg viewBox="0 0 24 24"><path d="M22 3 11 14M22 3l-7 19-4-8-8-4 19-7z"/></svg>投递</button>
+    <button class="tab" data-view="v-me" data-title="我的">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>我的</button>
+  </nav>
+</div>
+
+<script>
+function go(v){switchTab(v);document.querySelector('.content').scrollTop=0;}
+function switchTab(v){
+  document.querySelectorAll('.view').forEach(s=>s.classList.remove('active'));
+  document.getElementById(v).classList.add('active');
+  document.querySelectorAll('.tab').forEach(t=>{
+    const on=t.dataset.view===v;t.classList.toggle('on',on);
+  });
+  document.getElementById('barTitle').textContent=document.querySelector('.tab.on').dataset.title;
+}
+document.getElementById('tabbar').addEventListener('click',e=>{
+  const b=e.target.closest('.tab'); if(b) switchTab(b.dataset.view);
+});
+document.getElementById('pc')?.addEventListener('click',e=>{
+  const c=e.target.closest('.chip'); if(!c)return;
+  document.querySelectorAll('#pc .chip').forEach(x=>x.classList.remove('on'));
+  c.classList.add('on');
+});
+</script>
+</body>
+</html>

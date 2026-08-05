@@ -186,12 +186,16 @@
             }
         }
     </style>
-    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
     <script>
         mermaid.initialize({
-            startOnLoad:true,
-            theme:"default",
-            flowchart:{ useMaxWidth:true }
+            startOnLoad: false,
+            theme: "default",
+            flowchart: { useMaxWidth: true },
+            securityLevel: 'loose'
+        });
+        document.addEventListener('DOMContentLoaded', function() {
+            mermaid.run({ querySelector: '.mermaid' });
         });
     </script>
 </head>
@@ -915,7 +919,7 @@ flowchart TD
         <h3>基础表头信息</h3>
         <table>
             <tr><th>撰写人</th><th>时间</th><th>改动</th><th>备注</th></tr>
-            <tr><td>杨俊宇</td><td>2026.07.17</td><td>3竞品五层完整拆解（战略/范围/结构/框架/表现）</td><td>课程标准作业，匹配文档模板格式</td></tr>
+            <tr><td>杨俊宇</td><td>2026.07.17</td><td>3竞品五层完整拆解（战略/范围/结构/框架/表现）</td></tr>
         </table>
 
         <h3>5.1 竞品基础总表</h3>
@@ -1697,7 +1701,7 @@ flowchart LR
         </table>
 
         <h3>7.4 团队配置与里程碑排期</h3>
-        <p style="color:#666;line-height:1.8;">MVP 阶段建议以小而精的团队（3–4 人）在 8–10 周跑出可演示版本，契合课程作业与求职作品集展示。分工如下：</p>
+        <p style="color:#666;line-height:1.8;">MVP 阶段建议以小而精的团队（3–4 人）在 8–10 周跑出可演示版本。分工如下：</p>
         <table style="width:100%;border-collapse:collapse;">
             <thead>
                 <tr style="background:#f0f4ff;">
@@ -2079,7 +2083,8 @@ flowchart LR
                 <h4 style="color:#1d4ed8;margin:6px 0 10px;">产品功能金字塔结构图（一站式求职 AI Agent 的功能拆解）</h4>
         <p style="color:#666;line-height:1.8;">参考微信金字塔结构：顶层是产品定位，往下逐层拆出核心功能模块，再拆出每个模块的关键子功能。这是一个从上而下的产品功能金字塔。</p>
         <div class="chart-box">
-            <div class="mermaid">%%{init: {"flowchart": {"rankSpacing": 110, "nodeSpacing": 30, "curve": "basis"}}}%%
+            <div class="mermaid">
+%%{init: {"flowchart": {"rankSpacing": 110, "nodeSpacing": 30, "curve": "basis"}}}%%
 flowchart TD
     P[产品定位：一站式求职 AI Agent]
     P --> A[求职准备]
